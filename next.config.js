@@ -11,6 +11,9 @@ const nextConfig = {
     // In order for webpack to build wikijs properly, you must add an option to your webpack configuration file:
     config.externals = {
       'isomorphic-fetch': 'fetch',
+      'aws-sdk': 'aws-sdk',
+      'mock-aws-s3':'mock-aws-s3',
+      'nock': 'nock'
     }
     return config;
   },
