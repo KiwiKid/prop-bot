@@ -16,7 +16,8 @@ const nextConfig = {
       'nock': 'nock',
       '@huggingface/inference':'@huggingface/inference',
       'cohere-ai':'cohere-ai',
-      '@dqbd/tiktoken':'@dqbd/tiktoken'
+      '@dqbd/tiktoken':'@dqbd/tiktoken',
+      'chromadb':'chromadb'
     }
     return config;
   },
