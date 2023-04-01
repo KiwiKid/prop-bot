@@ -17,7 +17,7 @@ export default async function handler(
 
   // if we don't have history, we're string the chat, get summary info and provide it (ignore the questionIn)
   if(history && history?.length == 0 ){
-    const RADIUS = 1000
+    const RADIUS = 10000
 
     const latNum = parseFloat(lat as string);
     const lngNum = parseFloat(lng as string);
