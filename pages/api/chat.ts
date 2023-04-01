@@ -15,7 +15,7 @@ export default async function handler(
 
   let sanitizedQuestion;
   // if we don't have history, we're string the chat, get summary info and provide it (ignore the questionIn)
-  if(!history){
+  if(history && history?.length == 0 ){
     const RADIUS = 1000
 
     const latNum = parseFloat(lat as string);
