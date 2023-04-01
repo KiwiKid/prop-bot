@@ -13,7 +13,10 @@ const nextConfig = {
       'isomorphic-fetch': 'fetch',
       'aws-sdk': 'aws-sdk',
       'mock-aws-s3':'mock-aws-s3',
-      'nock': 'nock'
+      'nock': 'nock',
+      '@huggingface/inference':'@huggingface/inference',
+      'cohere-ai':'cohere-ai',
+      '@dqbd/tiktoken':'@dqbd/tiktoken'
     }
     return config;
   },
