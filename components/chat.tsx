@@ -301,7 +301,7 @@ const Chat = (props: any) => {
                       </div>
                     </div>
                     {message.sourceDocs && (
-                      <div className="p-5">
+                      <div key={`sourceDocs-${index}`} className="p-5">
                         <Accordion
                           type="single"
                           collapsible

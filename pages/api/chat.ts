@@ -29,10 +29,20 @@ export default async function handler(
     const result = await WikiJS().geoSearch(latNum, lngNum, RADIUS)
         .then((res) => {
             // TODO: do we need to filter to just regions here?
+            if(res.length == 0){
+              throw new Error(`No match found for ${latNum} ${lngNum}`)
+            }
             return res[0];
         })
         .then((pageName) => WikiJS().page(pageName))
         .then((page) => page.summary())
+        .catch((err) => {
+          console.error(err)
+        })
+
+    if(!result){
+      sanitizedQuestion = 'Looks like a great place to live, make up some stuff'
+    }
 
     sanitizedQuestion = `Here is some context, give a summary: ${result}`
   }else{
