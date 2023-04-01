@@ -5,7 +5,7 @@ import { makeChain } from '@/utils/makechain';
 import { pinecone } from '@/utils/pinecone-client';
 import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from '@/config/pinecone';
 import WikiJS from 'wikijs';
-import { getNearestPlaceSummary } from '@/utils/wikipedia';
+import { getNearestPlaceSummary } from '@/utils/getNearestPlaceSummary';
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,7 +24,7 @@ export default async function handler(
         res.status(400).json({ error: 'Invalid lat/lng query params'})
     }
 
-    const result = getNearestPlaceSummary(latNum, lngNum)
+    const result = await getNearestPlaceSummary(latNum, lngNum)
 
     sanitizedQuestion = `Here is some context, give a summary: ${result}`
   }else{

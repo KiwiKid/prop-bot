@@ -4,6 +4,7 @@ export interface Place {
     island: 'North'|'South'
     name: string
     wikiUrl: string
+    //wikiName: string // use for geosearch matching
 }
 
 const places:Place[] = [
@@ -11,19 +12,22 @@ const places:Place[] = [
       "name": "Northland",
       "island": "North",
       "url": "tools/2018-census-place-summaries/northland-region",
-      "wikiUrl": "Northland_Region"
+      "wikiUrl": "Northland_Region",
+      //"wikiName": "Northland Region"
     },
     {
       "name": "Auckland",
       "island": "North",
       "url": "tools/2018-census-place-summaries/auckland-region",
-      "wikiUrl": "Auckland_Region"
+      "wikiUrl": "Auckland_Region",
+     // "wikiUrl": "Auckland Region",
     },
     {
       "name": "Waikato",
       "island": "North",
       "url": "tools/2018-census-place-summaries/waikato-region",
-      "wikiUrl": "Waikato_Region"
+      "wikiUrl": "Waikato_Region",
+      "wikiUrl": "Waikato Region"
     },
     {
       "name": "Bay of Plenty",

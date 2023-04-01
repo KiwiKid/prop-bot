@@ -1,4 +1,4 @@
-import { getNearestPlaceSummary } from "@/utils/wikipedia";
+import { getNearestPlaceSummary } from "@/utils/getNearestPlaceSummary";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -18,7 +18,7 @@ export default async function handler(
         res.status(400).json({ error: 'Invalid lat/lng query params'})
     }
 
-    const result = getNearestPlaceSummary(latNum, lngNum)
+    const result = await getNearestPlaceSummary(latNum, lngNum)
 
 
         res.status(200).json({ result });

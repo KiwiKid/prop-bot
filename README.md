@@ -52,6 +52,8 @@ Geo Heirarchy
 # DEBUG place data for any place via the wikiUrl:
 e.g. http://localhost:3000/debug/places/Auckland_Region
 
+localhost:3000/api/summary?lat=-43.52026540678198&lng=172.57562388733552 
+localhost:3000/api/summary?lat=-43.37852896219917&lng=172.66348426648506 
 
 
 
