@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import Layout from '@/components/layout';
 import styles from '@/styles/Home.module.css';
 import { Message } from '@/types/chat';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
@@ -15,7 +14,6 @@ import {
 } from '@/components/ui/accordion';
 // Link
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const buttonStyle = {
   backgroundColor: '#3f51b5',
