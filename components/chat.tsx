@@ -34,9 +34,7 @@ const buttonStyle = {
 const Chat = (props: any) => {
   console.log('props', props);
 
-  const { query } = useRouter();
-
-  const [inputQuery, setInputQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
   const [sourceDocs, setSourceDocs] = useState<Document[]>([]);
@@ -124,7 +122,7 @@ const Chat = (props: any) => {
         console.log('error', error);
       }
     }
-  }, [query.lat, query.lng, history, ctrl])
+  }, [])
 
   //handle form submission
   async function handleSubmit(e: any) {
@@ -132,12 +130,18 @@ const Chat = (props: any) => {
 
     setError(null);
 
+    const urlParams = new URLSearchParams(window.document.location.search);
+    const lat = urlParams.get('lat')
+    const lng = urlParams.get('lng')
+
     if (!query) {
       alert('Please input a question');
       return;
     }
 
-    const question = inputQuery?.trim();
+    
+
+    const question = query?.trim();
 
     setMessageState((state) => ({
       ...state,
@@ -152,7 +156,7 @@ const Chat = (props: any) => {
     }));
 
     setLoading(true);
-    setInputQuery('');
+    setQuery('');
     setMessageState((state) => ({ ...state, pending: '' }));
 
 
@@ -165,8 +169,8 @@ const Chat = (props: any) => {
         body: JSON.stringify({
           question,
           history,
-          lat: query.lat,
-          lng: query.lng,
+          lat: lat,
+          lng: lng,
         }),
         signal: ctrl.signal,
         onmessage: (event) => {
@@ -369,8 +373,8 @@ const Chat = (props: any) => {
                       ? 'Waiting for response...'
                       : 'What is this legal case about?'
                   }
-                  value={inputQuery}
-                  onChange={(e) => setInputQuery(e.target.value)}
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                   className={styles.textarea}
                 />
                 <button
