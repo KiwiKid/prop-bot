@@ -11,15 +11,7 @@ interface PlacePageProps {
 const PlacePage = ({ place, placeDocument }:PlacePageProps) => {
   // const router = useRouter();
 
-  useEffect(() => {
-    // Simulate loading data for the place
-    // This could be replaced with a real data loading function
-    setTimeout(() => {
-      console.log(`Data loaded for ${place}`);
-    }, 1000);
-  }, [place]);
-
-  return (<div>
+   return (<div>
       <h1>Name:</h1>
       <h1>{place.name}</h1>
       <h1>Place Config:</h1>
