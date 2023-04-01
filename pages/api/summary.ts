@@ -1,5 +1,5 @@
+import { getNearestPlaceSummary } from "@/utils/wikipedia";
 import { NextApiRequest, NextApiResponse } from "next";
-import WikiJS from "wikijs";
 
 export default async function handler(
     req: NextApiRequest,
@@ -8,7 +8,7 @@ export default async function handler(
     try { 
 
     const { lat, lng } = req.query;
-    const RADIUS = 1000
+    const RADIUS = 10000
 
 
     const latNum = parseFloat(lat as string);
@@ -18,20 +18,12 @@ export default async function handler(
         res.status(400).json({ error: 'Invalid lat/lng query params'})
     }
 
-
-
-    const result = await WikiJS().geoSearch(latNum, lngNum, RADIUS)
-        .then((res) => {
-            // TODO: do we need to filter to just regions here?
-            return res[0];
-        })
-        .then((pageName) => WikiJS().page(pageName))
-        .then((page) => page.summary())
+    const result = getNearestPlaceSummary(latNum, lngNum)
 
 
         res.status(200).json({ result });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: "Internal Server Error", raw: error });
     }
   }

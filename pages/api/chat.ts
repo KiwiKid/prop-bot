@@ -5,6 +5,7 @@ import { makeChain } from '@/utils/makechain';
 import { pinecone } from '@/utils/pinecone-client';
 import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from '@/config/pinecone';
 import WikiJS from 'wikijs';
+import { getNearestPlaceSummary } from '@/utils/wikipedia';
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +16,6 @@ export default async function handler(
   let sanitizedQuestion;
   // if we don't have history, we're string the chat, get summary info and provide it (ignore the questionIn)
   if(!history){
-    const RADIUS = 1000
 
     const latNum = parseFloat(lat as string);
     const lngNum = parseFloat(lng as string);
@@ -24,13 +24,7 @@ export default async function handler(
         res.status(400).json({ error: 'Invalid lat/lng query params'})
     }
 
-    const result = await WikiJS().geoSearch(latNum, lngNum, RADIUS)
-        .then((res) => {
-            // TODO: do we need to filter to just regions here?
-            return res[0];
-        })
-        .then((pageName) => WikiJS().page(pageName))
-        .then((page) => page.summary())
+    const result = getNearestPlaceSummary(latNum, lngNum)
 
     sanitizedQuestion = `Here is some context, give a summary: ${result}`
   }else{
