@@ -14,6 +14,7 @@ export default async function handler(
   const questionIn = req.body.question;
 
   let sanitizedQuestion;
+
   // if we don't have history, we're string the chat, get summary info and provide it (ignore the questionIn)
   if(history && history?.length == 0 ){
     const RADIUS = 1000
@@ -21,7 +22,7 @@ export default async function handler(
     const latNum = parseFloat(lat as string);
     const lngNum = parseFloat(lng as string);
 
-    if(!latNum || !lngNum){
+    if(isNaN(latNum) || isNaN(lngNum)){
         res.status(400).json({ error: 'Invalid lat/lng query params'})
     }
 
