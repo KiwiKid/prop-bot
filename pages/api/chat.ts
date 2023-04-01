@@ -53,30 +53,41 @@ export default async function handler(
 
   const index = pinecone.Index(PINECONE_INDEX_NAME);
 
-  /* create vectorstore*/
-  const vectorStore = await PineconeStore.fromExistingIndex(
-    index,
-    new OpenAIEmbeddings({}),
-    'text',
-    PINECONE_NAME_SPACE, //optional
-  );
 
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache, no-transform',
-    Connection: 'keep-alive',
-  });
+    /* create vectorstore*/
+    const vectorStore = await PineconeStore.fromExistingIndex(
+      index,
+      new OpenAIEmbeddings({}),
+      'text',
+      PINECONE_NAME_SPACE, //optional
+    );
 
-  const sendData = (data: string) => {
-    res.write(`data: ${data}`);
-  };
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+    });
 
-  sendData(JSON.stringify({ data: '' }));
+    const sendData = (data: string) => {
+      res.write(`data: ${data}`);
+    };
 
-  //create chain
-  const chain = makeChain(vectorStore, (token: string) => {
-    sendData(JSON.stringify({ data: token }));
-  });
+    sendData(JSON.stringify({ data: '' }));
+
+
+    if(process.env.DRY_RUN){
+      sendData(`data: ${{
+        question: sanitizedQuestion,
+        chat_history: history || []
+      }}`)
+      sendData('[DONE]')
+      res.end();
+    }
+
+    //create chain
+    const chain = makeChain(vectorStore, (token: string) => {
+      sendData(JSON.stringify({ data: token }));
+    });
 
   try {
     //Ask a question
