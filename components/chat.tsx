@@ -42,7 +42,7 @@ const Chat = (props: any) => {
   const [sourceDocs, setSourceDocs] = useState<Document[]>([]);
   const [error, setError] = useState<string | null>(null);
   const ctrl = new AbortController();
-  const [messageState, setMessageState] = useState<{
+    const [messageState, setMessageState] = useState<{
     messages: Message[];
     pending?: string;
     history: [string, string][];
@@ -68,7 +68,10 @@ const Chat = (props: any) => {
 
     if(!hasLoaded){
       setHasLoaded(true);
-        
+
+
+      // use windw.location as useRouter does not cover dynamic components
+    const urlParams = new URLSearchParams(window.document.location.search);
       try {
         fetchEventSource('/api/chat', {
           method: 'POST',
@@ -76,8 +79,8 @@ const Chat = (props: any) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            lat: query.lat,
-            lng: query.lng,
+            lat: urlParams.get("lat"),
+            lng: urlParams.get("lng"),
             history,
           }),
           signal: ctrl.signal,
